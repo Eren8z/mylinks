@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Link Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Raleway:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Popular DaFont-style fonts via CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;500;600&family=Righteous&family=Orbitron:wght@400;700&family=Fredoka+One&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal" style="display: none;">
+        <div class="admin-login-content">
+            <div class="admin-login-header">
+                <h3><i class="fas fa-lock"></i> Admin Access</h3>
+                <button class="close-admin-modal" onclick="closeAdminLogin()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="admin-login-body">
+                <input type="password" id="adminPassword" placeholder="Enter admin password" class="admin-password-input">
+                <button class="btn btn-login" onclick="authenticateAdmin()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <p class="admin-hint">Admin access required for editing</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-image">
+                <img src="https://via.placeholder.com/120" alt="Profile Picture" id="profileImg">
+                <div class="upload-overlay admin-only" onclick="changeProfilePicture()" style="display: none;">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <h1 class="profile-name" id="profileName">Your Name</h1>
+            <p class="profile-bio" id="profileBio">Add your bio here...</p>
+        </div>
+
+        <!-- Enhanced Font Customization Panel - Admin Only -->
+        <div class="font-panel admin-only" id="fontPanel" style="display: none;">
+            <h3>🎨 Font & Color Customization</h3>
+            <div class="font-options">
+                <!-- Profile Name Customization -->
+                <div class="font-section">
+                    <h4>Profile Name</h4>
+                    <div class="font-controls">
+                        <div class="font-group">
+                            <label>Font Family:</label>
+                            <select id="nameFont" onchange="changeFontFamily('name', this.value)">
+                                <optgroup label="System Fonts">
+                                    <option value="apple">Apple System</option>
+                                    <option value="roboto">Roboto</option>
+                                    <option value="helvetica">Helvetica</option>
+                                    <option value="arial">Arial</option>
+                                    <option value="georgia">Georgia</option>
+                                    <option value="times">Times New Roman</option>
+                                    <option value="courier">Courier New</option>
+                                </optgroup>
+                                <optgroup label="Modern Fonts">
+                                    <option value="poppins">Poppins</option>
+                                    <option value="montserrat">Montserrat</option>
+                                    <option value="opensans">Open Sans</option>
+                                    <option value="lato">Lato</option>
+                                    <option value="sourcesans">Source Sans Pro</option>
+                                    <option value="raleway">Raleway</option>
+                                    <option value="nunito">Nunito</option>
+                                </optgroup>
+                                <optgroup label="Display Fonts (DaFont Style)">
+                                    <option value="bebas">Bebas Neue</option>
+                                    <option value="cinzel">Cinzel</option>
+                                    <option value="righteous">Righteous</option>
+                                    <option value="orbitron">Orbitron</option>
+                                    <option value="fredoka">Fredoka One</option>
+                                    <option value="dancing">Dancing Script</option>
+                                    <option value="playfair">Playfair Display</option>
+                                    <option value="merriweather">Merriweather</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="font-group">
+                            <label>Color:</label>
+                            <input type="color" id="nameColor" value="#ffffff" onchange="changeFontColor('name', this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Bio Customization -->
+                <div class="font-section">
+                    <h4>Profile Bio</h4>
+                    <div class="font-controls">
+                        <div class="font-group">
+                            <label>Font Family:</label>
+                            <select id="bioFont" onchange="changeFontFamily('bio', this.value)">
+                                <optgroup label="System Fonts">
+                                    <option value="apple">Apple System</option>
+                                    <option value="roboto">Roboto</option>
+                                    <option value="helvetica">Helvetica</option>
+                                    <option value="arial">Arial</option>
+                                    <option value="georgia">Georgia</option>
+                                    <option value="times">Times New Roman</option>
+                                    <option value="courier">Courier New</option>
+                                </optgroup>
+                                <optgroup label="Modern Fonts">
+                                    <option value="poppins">Poppins</option>
+                                    <option value="montserrat">Montserrat</option>
+                                    <option value="opensans">Open Sans</option>
+                                    <option value="lato">Lato</option>
+                                    <option value="sourcesans">Source Sans Pro</option>
+                                    <option value="raleway">Raleway</option>
+                                    <option value="nunito">Nunito</option>
+                                </optgroup>
+                                <optgroup label="Display Fonts (DaFont Style)">
+                                    <option value="bebas">Bebas Neue</option>
+                                    <option value="cinzel">Cinzel</option>
+                                    <option value="righteous">Righteous</option>
+                                    <option value="orbitron">Orbitron</option>
+                                    <option value="fredoka">Fredoka One</option>
+                                    <option value="dancing">Dancing Script</option>
+                                    <option value="playfair">Playfair Display</option>
+                                    <option value="merriweather">Merriweather</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="font-group">
+                            <label>Color:</label>
+                            <input type="color" id="bioColor" value="#888888" onchange="changeFontColor('bio', this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Links Customization -->
+                <div class="font-section">
+                    <h4>Social Media Links</h4>
+                    <div class="font-controls">
+                        <div class="font-group">
+                            <label>Font Family:</label>
+                            <select id="linksFont" onchange="changeFontFamily('links', this.value)">
+                                <optgroup label="System Fonts">
+                                    <option value="apple">Apple System</option>
+                                    <option value="roboto">Roboto</option>
+                                    <option value="helvetica">Helvetica</option>
+                                    <option value="arial">Arial</option>
+                                    <option value="georgia">Georgia</option>
+                                    <option value="times">Times New Roman</option>
+                                    <option value="courier">Courier New</option>
+                                </optgroup>
+                                <optgroup label="Modern Fonts">
+                                    <option value="poppins">Poppins</option>
+                                    <option value="montserrat">Montserrat</option>
+                                    <option value="opensans">Open Sans</option>
+                                    <option value="lato">Lato</option>
+                                    <option value="sourcesans">Source Sans Pro</option>
+                                    <option value="raleway">Raleway</option>
+                                    <option value="nunito">Nunito</option>
+                                </optgroup>
+                                <optgroup label="Display Fonts (DaFont Style)">
+                                    <option value="bebas">Bebas Neue</option>
+                                    <option value="cinzel">Cinzel</option>
+                                    <option value="righteous">Righteous</option>
+                                    <option value="orbitron">Orbitron</option>
+                                    <option value="fredoka">Fredoka One</option>
+                                    <option value="dancing">Dancing Script</option>
+                                    <option value="playfair">Playfair Display</option>
+                                    <option value="merriweather">Merriweather</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="font-group">
+                            <label>Color:</label>
+                            <input type="color" id="linksColor" value="#ffffff" onchange="changeFontColor('links', this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Presets -->
+                <div class="font-section">
+                    <h4>Color Presets</h4>
+                    <div class="color-presets">
+                        <button class="preset-btn" onclick="applyColorPreset('default')" data-preset="default">Default</button>
+                        <button class="preset-btn" onclick="applyColorPreset('vibrant')" data-preset="vibrant">Vibrant</button>
+                        <button class="preset-btn" onclick="applyColorPreset('pastel')" data-preset="pastel">Pastel</button>
+                        <button class="preset-btn" onclick="applyColorPreset('neon')" data-preset="neon">Neon</button>
+                        <button class="preset-btn" onclick="applyColorPreset('monochrome')" data-preset="monochrome">Mono</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="links-section">
+            <div class="link-item" data-platform="facebook">
+                <div class="link-content">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter Facebook URL" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="twitter">
+                <div class="link-content">
+                    <span class="x-logo">𝕏</span>
+                    <span>X (Twitter)</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter X/Twitter URL" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="instagram">
+                <div class="link-content">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter Instagram URL" class="link-input admin-only" value="" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="whatsapp">
+                <div class="link-content">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="tel" placeholder="Enter WhatsApp number" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="email">
+                <div class="link-content">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="email" placeholder="Enter email address" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="discord">
+                <div class="link-content">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter Discord invite URL" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="telegram">
+                <div class="link-content">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter Telegram URL" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="youtube">
+                <div class="link-content">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter YouTube URL" class="link-input admin-only" style="display: none;">
+            </div>
+
+            <div class="link-item" data-platform="linkedin">
+                <div class="link-content">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                    <button class="delete-link admin-only" onclick="removeLink(this)" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="url" placeholder="Enter LinkedIn URL" class="link-input admin-only" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <!-- Always visible admin login button -->
+            <button class="btn btn-admin" id="adminLoginBtn" onclick="showAdminLogin()">
+                <i class="fas fa-user-shield"></i> Admin
+            </button>
+            
+            <!-- Admin controls - hidden by default -->
+            <button class="btn btn-add admin-only" onclick="showPlatformSelector()" style="display: none;">
+                <i class="fas fa-plus"></i> Add Link
+            </button>
+            <button class="btn btn-manage admin-only" onclick="toggleManageMode()" style="display: none;">
+                <i class="fas fa-cog"></i> Manage
+            </button>
+            <button class="btn btn-primary admin-only" onclick="toggleEditMode()" style="display: none;">
+                <i class="fas fa-edit"></i> Edit Mode
+            </button>
+            <button class="btn btn-secondary admin-only" onclick="saveProfile()" style="display: none;">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="btn btn-theme admin-only" onclick="toggleTheme()" style="display: none;">
+                <i class="fas fa-palette"></i> Theme
+            </button>
+            <button class="btn btn-font admin-only" onclick="toggleFontPanel()" style="display: none;">
+                <i class="fas fa-font"></i> Fonts & Colors
+            </button>
+            <button class="btn btn-logout admin-only" onclick="logoutAdmin()" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            
+            <!-- Always visible share button -->
+            <button class="btn btn-accent" onclick="shareProfile()">
+                <i class="fas fa-share"></i> Share
+            </button>
+        </div>
+
+        <!-- Analytics Panel - Admin Only -->
+        <div class="analytics-panel admin-only" id="analyticsPanel" style="display: none;">
+            <h3>Link Analytics</h3>
+            <div class="analytics-grid">
+                <div class="stat-card">
+                    <h4>Total Clicks</h4>
+                    <span class="stat-number" id="totalClicks">0</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Today's Clicks</h4>
+                    <span class="stat-number" id="todayClicks">0</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Most Popular</h4>
+                    <span class="stat-text" id="popularLink">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Status Indicator -->
+        <div class="admin-status admin-only" id="adminStatus" style="display: none;">
+            <i class="fas fa-crown"></i> Admin Mode Active
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
